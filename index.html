@@ -30,8 +30,13 @@
 
         h1 { color: #ff477e; margin-bottom: 20px; font-size: 26px; }
         input { width: 100%; padding: 15px; border: 2px solid #ffb3c6; border-radius: 25px; text-align: center; margin-bottom: 20px; font-size: 16px; outline: none; }
-        button { background: #ff477e; color: white; border: none; padding: 15px 30px; border-radius: 25px; cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 16px; }
-        button:hover { background: #ff0a54; transform: scale(1.05); }
+        
+        /* Tombol dengan transisi smooth */
+        #btn-utama { 
+            background: #ff477e; color: white; border: none; padding: 15px 30px; 
+            border-radius: 25px; cursor: pointer; font-weight: bold; 
+            transition: 0.2s ease; font-size: 16px; position: relative; 
+        }
         
         .gombalan-box { display: none; }
         .heart { position: absolute; color: #ff7096; font-size: 20px; pointer-events: none; animation: fall linear infinite; z-index: 1; }
@@ -43,7 +48,8 @@
     <div class="card" id="inputCard">
         <h1>Hai Jea, boleh isi namo panggilan kamu dulu? ❤️</h1>
         <input type="text" id="namaInput" placeholder="Nama panggilan kamu..." required>
-        <button onclick="bukaGombalan()">Lihat Pesan untuk Jea</button>
+        <button id="btn-utama" onmouseover="gerakLari()">Lihat Pesan untuk Jea</button>
+        <p id="counter" style="margin-top: 15px; color: #ff477e; font-weight: bold;"></p>
     </div>
 
     <div class="card gombalan-box" id="gombalanCard">
@@ -53,10 +59,36 @@
     </div>
 
     <script>
+        let klikCount = 0;
+        const targetKlik = 6;
+        const btn = document.getElementById('btn-utama');
+
+        // Fungsi tombol lari/menghindar
+        function gerakLari() {
+            if (klikCount < targetKlik) {
+                const x = Math.random() * (window.innerWidth - btn.offsetWidth - 50);
+                const y = Math.random() * (window.innerHeight - btn.offsetHeight - 50);
+                btn.style.position = 'fixed';
+                btn.style.left = x + 'px';
+                btn.style.top = y + 'px';
+            }
+        }
+
+        // Event saat tombol diklik
+        btn.onclick = function() {
+            klikCount++;
+            if (klikCount < targetKlik) {
+                document.getElementById('counter').innerText = "Wkwkwk, kejar terus! (" + klikCount + "/" + targetKlik + ")";
+                gerakLari();
+            } else {
+                bukaGombalan();
+            }
+        };
+
         const daftarGombal = [
-            "Jea,kalo ngobrol smo kmu nih nyambung enak pembawaannyo .",
+            "Jea, kalo ngobrol smo kmu nih nyambung enak pembawaannyo.",
             "Katanya kalau malam liat bintang itu indah, tapi setelah liat senyum Jea, bintang-bintang di langit langsung minder semua.",
-            "Aku tuh gak pernah mau jadi superhero. Aku cuma mau jadi 'super' bagi hari-harimu dan 'hero' di hati Jea .",
+            "Aku tuh gak pernah mau jadi superhero. Aku cuma mau jadi 'super' bagi hari-harimu dan 'hero' di hati Jea.",
             "Yang semangat jea ngerjain excelnyo wkwwk.",
             "Jea itu kayak kopi, manisnya bikin aku candu dan nggak bisa tidur karena selalu kepikiran eahh.",
             "Dunia ini luas banget Jea, idak selalu kito jadi korban dikecewakan terus kito berhak bahagia",
@@ -76,7 +108,7 @@
 
         function bukaGombalan() {
             const nama = document.getElementById('namaInput').value.trim();
-            if (nama === "") { alert("Namanya diisi dulu ya Jea..."); return; }
+            if (nama === "") { alert("Namanya diisi dulu ya Jea..."); klikCount = 0; return; }
             
             const gombalanAcak = daftarGombal[Math.floor(Math.random() * daftarGombal.length)];
             
