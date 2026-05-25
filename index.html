@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ada Pesan Buat Kamu! ❤️</title>
+    <title>Special for Jea ❤️</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body {
@@ -18,24 +18,20 @@
 
         .card {
             background: rgba(255, 255, 255, 0.9);
-            padding: 30px;
-            border-radius: 20px;
+            padding: 40px;
+            border-radius: 30px;
             box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
             text-align: center;
             border: 2px solid #ffb3c6;
-            max-width: 400px;
+            max-width: 450px;
             width: 90%;
             z-index: 10;
         }
 
-        /* Tombol Jahil */
-        #btn-jahil {
-            position: relative;
-            transition: 0.2s;
-        }
-
-        input { width: 100%; padding: 12px; border: 2px solid #ffb3c6; border-radius: 25px; text-align: center; margin-bottom: 20px; }
-        button { background: #ff477e; color: white; border: none; padding: 12px 28px; border-radius: 25px; cursor: pointer; font-weight: bold; }
+        h1 { color: #ff477e; margin-bottom: 20px; font-size: 26px; }
+        input { width: 100%; padding: 15px; border: 2px solid #ffb3c6; border-radius: 25px; text-align: center; margin-bottom: 20px; font-size: 16px; outline: none; }
+        button { background: #ff477e; color: white; border: none; padding: 15px 30px; border-radius: 25px; cursor: pointer; font-weight: bold; transition: 0.3s; font-size: 16px; }
+        button:hover { background: #ff0a54; transform: scale(1.05); }
         
         .gombalan-box { display: none; }
         .music-control { margin-top: 20px; z-index: 20; }
@@ -46,40 +42,39 @@
 <body>
 
     <div class="card" id="inputCard">
-        <h1>Cobo kmu masukin namo kamu disini? 🤔</h1>
-        <input type="text" id="namaInput" placeholder="Ketik nama kamu di sini..." required>
-        <button id="btn-jahil" onclick="bukaGombalan()">Sekarang klik cobo! ❤️</button>
+        <h1>Hai Jea, boleh isi nama panggilan kamu dulu? ❤️</h1>
+        <input type="text" id="namaInput" placeholder="Nama panggilan kamu..." required>
+        <button onclick="bukaGombalan()">Lihat Pesan untuk Jea</button>
     </div>
 
     <div class="card gombalan-box" id="gombalanCard">
-        <h1>Hai <span id="panggilanNama"></span>! ✨</h1>
-        <p id="teksGombal" style="margin: 20px 0;"></p>
+        <h1>Untuk Jea tersayang ✨</h1>
+        <p id="teksGombal" style="margin: 20px 0; font-size: 19px; color: #444; font-weight: 500;"></p>
         <button onclick="lokasiKembali()">Main Lagi 🥰</button>
     </div>
 
     <div class="music-control">
         <button onclick="playMusic()">Putar Musik 🎵</button>
         <audio id="laguku" loop>
-            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+            <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
         </audio>
     </div>
 
     <script>
-        // Musik
         function playMusic() {
             const audio = document.getElementById('laguku');
             audio.play();
         }
 
-        // Tombol Jahil (Bergerak jika kursor mendekat)
-        const btnJahil = document.getElementById('btn-jahil');
-        btnJahil.addEventListener('mouseover', () => {
-            const x = Math.random() * (window.innerWidth - btnJahil.offsetWidth);
-            const y = Math.random() * (window.innerHeight - btnJahil.offsetHeight);
-            btnJahil.style.position = 'absolute';
-            btnJahil.style.left = x + 'px';
-            btnJahil.style.top = y + 'px';
-        });
+        const daftarGombal = [
+            "Jea, kamu tahu gak? Sejak ada kamu, duniaku jadi terasa jauh lebih berwarna.",
+            "Katanya kalau malam liat bintang itu indah, tapi setelah liat senyum Jea, bintang-bintang di langit langsung minder semua.",
+            "Aku tuh gak pernah mau jadi superhero. Aku cuma mau jadi 'super' bagi hari-harimu dan 'hero' di hati Jea.",
+            "Tolong jangan sering-sering senyum ya Jea, aku takut gak kuat nanggung rindu yang makin berat ini.",
+            "Jea itu kayak kopi, manisnya bikin aku candu dan nggak bisa tidur karena selalu kepikiran.",
+            "Dunia ini luas banget Jea, tapi kenapa ya kok pandanganku cuma berhenti di kamu doang?",
+            "Jea, makasih ya udah jadi alasan aku buat senyum setiap hari."
+        ];
 
         function createHeart() {
             const heart = document.createElement('div');
@@ -90,14 +85,15 @@
             document.body.appendChild(heart);
             setTimeout(() => heart.remove(), 5000);
         }
-        setInterval(createHeart, 500);
+        setInterval(createHeart, 400);
 
         function bukaGombalan() {
             const nama = document.getElementById('namaInput').value.trim();
-            if (nama === "") { alert("Isi dulu namanya!"); return; }
+            if (nama === "") { alert("Namanya diisi dulu ya Jea..."); return; }
             
-            document.getElementById('panggilanNama').innerText = nama;
-            document.getElementById('teksGombal').innerText = "Kamu adalah alasan kenapa hari-hariku jadi lebih indah.";
+            const gombalanAcak = daftarGombal[Math.floor(Math.random() * daftarGombal.length)];
+            
+            document.getElementById('teksGombal').innerText = gombalanAcak;
             document.getElementById('inputCard').style.display = 'none';
             document.getElementById('gombalanCard').style.display = 'block';
         }
