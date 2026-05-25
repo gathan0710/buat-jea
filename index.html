@@ -5,202 +5,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ada Pesan Buat Kamu! ❤️</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body {
             background: linear-gradient(135deg, #ffe5ec, #ffc2d1);
             height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            position: relative;
         }
-        <div style="text-align: center; margin-top: 20px;">
-    <p>Klik tombol di bawah untuk mendengarkan lagu:</p>
-    <button onclick="document.getElementById('laguku').play()" style="padding: 10px 20px; cursor: pointer;">
-        Putar Lagu 🎵
-    </button>
-    <button onclick="document.getElementById('laguku').pause()" style="padding: 10px 20px; cursor: pointer;">
-        Pause ⏸️
-    </button>
-    
-    <audio id="laguku" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    </audio>
-</div>
 
-        /* Kontainer Utama */
         .card {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.9);
             padding: 30px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
             text-align: center;
-            backdrop-filter: blur(10px);
             border: 2px solid #ffb3c6;
             max-width: 400px;
             width: 90%;
             z-index: 10;
-            transition: all 0.5s ease;
         }
 
-        h1 {
-            color: #ff477e;
-            margin-bottom: 20px;
-            font-size: 24px;
+        /* Tombol Jahil */
+        #btn-jahil {
+            position: relative;
+            transition: 0.2s;
         }
 
-        input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ffb3c6;
-            border-radius: 25px;
-            outline: none;
-            text-align: center;
-            font-size: 16px;
-            margin-bottom: 20px;
-            transition: 0.3s;
-        }
-
-        input:focus {
-            border-color: #ff477e;
-            box-shadow: 0 0 10px rgba(255, 71, 126, 0.2);
-        }
-
-        button {
-            background: #ff477e;
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            font-size: 16px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: transform 0.2s, background 0.3s;
-            box-shadow: 0 5px 15px rgba(255, 71, 126, 0.4);
-        }
-
-        button:hover {
-            background: #ff0a54;
-            transform: scale(1.05);
-        }
-
-        /* Konten Gombalan (Sembunyi di awal) */
-        .gombalan-box {
-            display: none;
-        }
-
-        .gombalan-text {
-            font-size: 18px;
-            color: #4a4a4a;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-
-        /* Animasi Hati Jatuh */
-        .heart {
-            position: absolute;
-            color: #ff7096;
-            font-size: 20px;
-            pointer-events: none;
-            animation: fall linear infinite;
-            z-index: 1;
-        }
-
-        @keyframes fall {
-            0% {
-                transform: translateY(-10vh) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(110vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
+        input { width: 100%; padding: 12px; border: 2px solid #ffb3c6; border-radius: 25px; text-align: center; margin-bottom: 20px; }
+        button { background: #ff477e; color: white; border: none; padding: 12px 28px; border-radius: 25px; cursor: pointer; font-weight: bold; }
+        
+        .gombalan-box { display: none; }
+        .music-control { margin-top: 20px; z-index: 20; }
+        .heart { position: absolute; color: #ff7096; font-size: 20px; pointer-events: none; animation: fall linear infinite; z-index: 1; }
+        @keyframes fall { 0% { transform: translateY(-10vh); opacity: 1; } 100% { transform: translateY(110vh); opacity: 0; } }
     </style>
 </head>
 <body>
 
-    <!-- Input Nama Awal -->
     <div class="card" id="inputCard">
-        <h1>cobo kmu masukin namo kamu disini? 🤔</h1>
+        <h1>Cobo kmu masukin namo kamu disini? 🤔</h1>
         <input type="text" id="namaInput" placeholder="Ketik nama kamu di sini..." required>
-        <button onclick="bukaGombalan()">Sekarang klik cobo! ❤️</button>
+        <button id="btn-jahil" onclick="bukaGombalan()">Sekarang klik cobo! ❤️</button>
     </div>
 
-    <!-- Tampilan Gombalan -->
     <div class="card gombalan-box" id="gombalanCard">
-        <h1>Hai <span id="panggilanNama" style="color: #ff0a54;"></span>! ✨</h1>
-        <p class="gombalan-text" id="teksGombal"></p>
+        <h1>Hai <span id="panggilanNama"></span>! ✨</h1>
+        <p id="teksGombal" style="margin: 20px 0;"></p>
         <button onclick="lokasiKembali()">Main Lagi 🥰</button>
     </div>
 
+    <div class="music-control">
+        <button onclick="playMusic()">Putar Musik 🎵</button>
+        <audio id="laguku" loop>
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
     <script>
-        // Efek Hati Berjatuhan di Background
+        // Musik
+        function playMusic() {
+            const audio = document.getElementById('laguku');
+            audio.play();
+        }
+
+        // Tombol Jahil (Bergerak jika kursor mendekat)
+        const btnJahil = document.getElementById('btn-jahil');
+        btnJahil.addEventListener('mouseover', () => {
+            const x = Math.random() * (window.innerWidth - btnJahil.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btnJahil.offsetHeight);
+            btnJahil.style.position = 'absolute';
+            btnJahil.style.left = x + 'px';
+            btnJahil.style.top = y + 'px';
+        });
+
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
             heart.innerHTML = '❤️';
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.animationDuration = Math.random() * 3 + 2 + 's';
-            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
-            heart.style.opacity = Math.random();
-            
             document.body.appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 5000);
+            setTimeout(() => heart.remove(), 5000);
         }
+        setInterval(createHeart, 500);
 
-        // Jalankan hujan hati terus menerus
-        setInterval(createHeart, 300);
-
-        // Fungsi saat tombol diklik
         function bukaGombalan() {
             const nama = document.getElementById('namaInput').value.trim();
+            if (nama === "") { alert("Isi dulu namanya!"); return; }
             
-            if (nama === "") {
-                alert("Namanya diisi dulu dong cantik... T_T");
-                return;
-            }
-
-            // Kumpulan kata-kata gombal (Bisa kamu ganti sesukamu)
-            const listGombalan = [
-                `Kamu tahu gak? Sejak ada kamu, abjad di hidupku cuma tinggal 2: U & I.`,
-                `Katanya kalau malam liat bintang itu indah, tapi setelah liat senyum kamu, bintang-bintang di langit langsung minder semua.`,
-                `Aku tuh gak pernah mau jadi superhero. Aku cuma mau jadi "super" bagi hari-harimu dan "hero" di hatimu.`,
-                `Tolong jangan sering-sering senyum ya, aku takut gak kuat nanggung rindu yang makin berat ini.`
-            ];
-
-            // Ambil acak satu gombalan
-            const gombalanAcak = listGombalan[Math.floor(Math.random() * listGombalan.length)];
-
-            // Tampilkan hasil
             document.getElementById('panggilanNama').innerText = nama;
-            document.getElementById('teksGombal').innerText = gombalanAcak;
-
-            // Efek transisi box
+            document.getElementById('teksGombal').innerText = "Kamu adalah alasan kenapa hari-hariku jadi lebih indah.";
             document.getElementById('inputCard').style.display = 'none';
             document.getElementById('gombalanCard').style.display = 'block';
-
-            // Bikin efek ledakan hati instan saat diklik
-            for(let i=0; i<20; i++) {
-                setTimeout(createHeart, i * 50);
-            }
         }
 
         function lokasiKembali() {
-            document.getElementById('namaInput').value = "";
-            document.getElementById('gombalanCard').style.display = 'none';
-            document.getElementById('inputCard').style.display = 'block';
+            location.reload();
         }
     </script>
 </body>
