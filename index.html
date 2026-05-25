@@ -21,6 +21,19 @@
             overflow: hidden;
             position: relative;
         }
+        <div style="text-align: center; margin-top: 20px;">
+    <p>Klik tombol di bawah untuk mendengarkan lagu:</p>
+    <button onclick="document.getElementById('laguku').play()" style="padding: 10px 20px; cursor: pointer;">
+        Putar Lagu 🎵
+    </button>
+    <button onclick="document.getElementById('laguku').pause()" style="padding: 10px 20px; cursor: pointer;">
+        Pause ⏸️
+    </button>
+    
+    <audio id="laguku" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+</div>
 
         /* Kontainer Utama */
         .card {
@@ -117,9 +130,9 @@
 
     <!-- Input Nama Awal -->
     <div class="card" id="inputCard">
-        <h1>Siapa nama kamu? 🤔</h1>
+        <h1>cobo kmu masukin namo kamu disini? 🤔</h1>
         <input type="text" id="namaInput" placeholder="Ketik nama kamu di sini..." required>
-        <button onclick="bukaGombalan()">Klik Aku! ❤️</button>
+        <button onclick="bukaGombalan()">Sekarang klik cobo! ❤️</button>
     </div>
 
     <!-- Tampilan Gombalan -->
