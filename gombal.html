@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ada Pesan Buat Kamu! ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ffe5ec, #ffc2d1);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Kontainer Utama */
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 2px solid #ffb3c6;
+            max-width: 400px;
+            width: 90%;
+            z-index: 10;
+            transition: all 0.5s ease;
+        }
+
+        h1 {
+            color: #ff477e;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ffb3c6;
+            border-radius: 25px;
+            outline: none;
+            text-align: center;
+            font-size: 16px;
+            margin-bottom: 20px;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #ff477e;
+            box-shadow: 0 0 10px rgba(255, 71, 126, 0.2);
+        }
+
+        button {
+            background: #ff477e;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s, background 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 71, 126, 0.4);
+        }
+
+        button:hover {
+            background: #ff0a54;
+            transform: scale(1.05);
+        }
+
+        /* Konten Gombalan (Sembunyi di awal) */
+        .gombalan-box {
+            display: none;
+        }
+
+        .gombalan-text {
+            font-size: 18px;
+            color: #4a4a4a;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        /* Animasi Hati Jatuh */
+        .heart {
+            position: absolute;
+            color: #ff7096;
+            font-size: 20px;
+            pointer-events: none;
+            animation: fall linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Input Nama Awal -->
+    <div class="card" id="inputCard">
+        <h1>Siapa nama kamu? 🤔</h1>
+        <input type="text" id="namaInput" placeholder="Ketik nama kamu di sini..." required>
+        <button onclick="bukaGombalan()">Klik Aku! ❤️</button>
+    </div>
+
+    <!-- Tampilan Gombalan -->
+    <div class="card gombalan-box" id="gombalanCard">
+        <h1>Hai <span id="panggilanNama" style="color: #ff0a54;"></span>! ✨</h1>
+        <p class="gombalan-text" id="teksGombal"></p>
+        <button onclick="lokasiKembali()">Main Lagi 🥰</button>
+    </div>
+
+    <script>
+        // Efek Hati Berjatuhan di Background
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            heart.style.opacity = Math.random();
+            
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        // Jalankan hujan hati terus menerus
+        setInterval(createHeart, 300);
+
+        // Fungsi saat tombol diklik
+        function bukaGombalan() {
+            const nama = document.getElementById('namaInput').value.trim();
+            
+            if (nama === "") {
+                alert("Namanya diisi dulu dong cantik... T_T");
+                return;
+            }
+
+            // Kumpulan kata-kata gombal (Bisa kamu ganti sesukamu)
+            const listGombalan = [
+                `Kamu tahu gak? Sejak ada kamu, abjad di hidupku cuma tinggal 2: U & I.`,
+                `Katanya kalau malam liat bintang itu indah, tapi setelah liat senyum kamu, bintang-bintang di langit langsung minder semua.`,
+                `Aku tuh gak pernah mau jadi superhero. Aku cuma mau jadi "super" bagi hari-harimu dan "hero" di hatimu.`,
+                `Tolong jangan sering-sering senyum ya, aku takut gak kuat nanggung rindu yang makin berat ini.`
+            ];
+
+            // Ambil acak satu gombalan
+            const gombalanAcak = listGombalan[Math.floor(Math.random() * listGombalan.length)];
+
+            // Tampilkan hasil
+            document.getElementById('panggilanNama').innerText = nama;
+            document.getElementById('teksGombal').innerText = gombalanAcak;
+
+            // Efek transisi box
+            document.getElementById('inputCard').style.display = 'none';
+            document.getElementById('gombalanCard').style.display = 'block';
+
+            // Bikin efek ledakan hati instan saat diklik
+            for(let i=0; i<20; i++) {
+                setTimeout(createHeart, i * 50);
+            }
+        }
+
+        function lokasiKembali() {
+            document.getElementById('namaInput').value = "";
+            document.getElementById('gombalanCard').style.display = 'none';
+            document.getElementById('inputCard').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
