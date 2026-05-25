@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Special for Jea ❤️</title>
+    <title>Ujian Cinta untuk Jea ❤️</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body {
@@ -28,62 +28,42 @@
             z-index: 10;
         }
 
-        h1 { color: #ff477e; margin-bottom: 20px; font-size: 26px; }
+        h1 { color: #ff477e; margin-bottom: 20px; font-size: 24px; }
         input { width: 100%; padding: 15px; border: 2px solid #ffb3c6; border-radius: 25px; text-align: center; margin-bottom: 20px; font-size: 16px; outline: none; }
         
-        /* Tombol dengan transisi smooth */
         #btn-utama { 
             background: #ff477e; color: white; border: none; padding: 15px 30px; 
             border-radius: 25px; cursor: pointer; font-weight: bold; 
-            transition: 0.2s ease; font-size: 16px; position: relative; 
+            transition: 0.2s ease; font-size: 16px;
         }
         
         .gombalan-box { display: none; }
         .heart { position: absolute; color: #ff7096; font-size: 20px; pointer-events: none; animation: fall linear infinite; z-index: 1; }
-        @keyframes fall { 0% { transform: translateY(-10vh); opacity: 1; } 100% { transform: translateY(110vh); opacity: 0; } }
+        @keyframes fall { 0% { transform: translateY(-10vh); opacity: 1; } 100% { transform: translateY(110vh); opacity: 360deg; } }
     </style>
 </head>
 <body>
 
     <div class="card" id="inputCard">
-        <h1>Hai Jea, boleh isi namo panggilan kamu dulu? ❤️</h1>
-        <input type="text" id="namaInput" placeholder="Nama panggilan kamu..." required>
-        <button id="btn-utama" onmouseover="gerakLari()">Lihat Pesan untuk Jea</button>
-        <p id="counter" style="margin-top: 15px; color: #ff477e; font-weight: bold;"></p>
+        <h1 id="soalMtk">Loading...</h1>
+        <input type="number" id="jawabanInput" placeholder="Jawaban kamu..." required>
+        <button id="btn-utama" onclick="cekJawaban()">Kunci Jawaban 🔒</button>
+        <p id="pesanError" style="margin-top: 15px; color: red; font-weight: bold;"></p>
     </div>
 
     <div class="card gombalan-box" id="gombalanCard">
-        <h1>Untuk Jea ✨</h1>
+        <h1>Hai Jea! ✨</h1>
         <p id="teksGombal" style="margin: 20px 0; font-size: 19px; color: #444; font-weight: 500;"></p>
-        <button onclick="lokasiKembali()">Main Lagi 🥰</button>
+        <button onclick="location.reload()">Main Lagi 🥰</button>
     </div>
 
     <script>
-        let klikCount = 0;
-        const targetKlik = 6;
-        const btn = document.getElementById('btn-utama');
-
-        // Fungsi tombol lari/menghindar
-        function gerakLari() {
-            if (klikCount < targetKlik) {
-                const x = Math.random() * (window.innerWidth - btn.offsetWidth - 50);
-                const y = Math.random() * (window.innerHeight - btn.offsetHeight - 50);
-                btn.style.position = 'fixed';
-                btn.style.left = x + 'px';
-                btn.style.top = y + 'px';
-            }
-        }
-
-        // Event saat tombol diklik
-        btn.onclick = function() {
-            klikCount++;
-            if (klikCount < targetKlik) {
-                document.getElementById('counter').innerText = "Wkwkwk, kejar terus! (" + klikCount + "/" + targetKlik + ")";
-                gerakLari();
-            } else {
-                bukaGombalan();
-            }
-        };
+        // Membuat soal MTK acak
+        let angka1 = Math.floor(Math.random() * 10) + 1;
+        let angka2 = Math.floor(Math.random() * 10) + 1;
+        let hasilBenar = angka1 + angka2;
+        
+        document.getElementById('soalMtk').innerText = "Berapakah hasil dari: " + angka1 + " + " + angka2 + " ? 🤔";
 
         const daftarGombal = [
             "Jea, kalo ngobrol smo kmu nih nyambung enak pembawaannyo.",
@@ -95,6 +75,23 @@
             "Jea, makasih ya udah jadi alasan aku buat senyum setiap hari."
         ];
 
+        function cekJawaban() {
+            const jawaban = document.getElementById('jawabanInput').value;
+            if (parseInt(jawaban) === hasilBenar) {
+                bukaGombalan();
+            } else {
+                document.getElementById('pesanError').innerText = "Waduh salah! Coba hitung lagi Jea sayang... 😉";
+            }
+        }
+
+        function bukaGombalan() {
+            const gombalanAcak = daftarGombal[Math.floor(Math.random() * daftarGombal.length)];
+            document.getElementById('teksGombal').innerText = gombalanAcak;
+            document.getElementById('inputCard').style.display = 'none';
+            document.getElementById('gombalanCard').style.display = 'block';
+        }
+
+        // Efek hujan hati
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
@@ -105,21 +102,6 @@
             setTimeout(() => heart.remove(), 5000);
         }
         setInterval(createHeart, 400);
-
-        function bukaGombalan() {
-            const nama = document.getElementById('namaInput').value.trim();
-            if (nama === "") { alert("Namanya diisi dulu ya Jea..."); klikCount = 0; return; }
-            
-            const gombalanAcak = daftarGombal[Math.floor(Math.random() * daftarGombal.length)];
-            
-            document.getElementById('teksGombal').innerText = gombalanAcak;
-            document.getElementById('inputCard').style.display = 'none';
-            document.getElementById('gombalanCard').style.display = 'block';
-        }
-
-        function lokasiKembali() {
-            location.reload();
-        }
     </script>
 </body>
 </html>
