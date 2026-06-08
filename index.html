@@ -1,230 +1,99 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ujian Pak Teguh ✨</title>
+<title>I Love You ❤️</title>
+
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
 body{
-background:linear-gradient(135deg,#87ceeb,#ffc2d1);
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-overflow:hidden;
-flex-direction:column;
-}
-
-.card{
-background:rgba(255,255,255,0.9);
-padding:40px;
-border-radius:30px;
-box-shadow:0 10px 30px rgba(255,105,180,0.3);
-text-align:center;
-max-width:450px;
-width:90%;
-border:2px solid #ffb3c6;
-z-index:10;
-}
-
-h1{
-color:#ff477e;
-margin-bottom:20px;
-font-size:22px;
-}
-
-input{
-width:100%;
-padding:15px;
-border:2px solid #ffb3c6;
-border-radius:25px;
-text-align:center;
-font-size:16px;
-margin-bottom:20px;
-outline:none;
-}
-
-button{
-background:#ff477e;
-color:white;
-border:none;
-padding:15px 30px;
-border-radius:25px;
-cursor:pointer;
-font-size:16px;
-font-weight:bold;
-transition:0.2s;
-}
-
-button:hover{
-transform:scale(1.05);
-}
-
-.gombalan-box{
-display:none;
+    margin:0;
+    background:#000;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    font-family:Arial,sans-serif;
 }
 
 .heart{
-position:absolute;
-color:#ff7096;
-font-size:20px;
-pointer-events:none;
-animation:fall linear infinite;
-z-index:1;
+    position:relative;
+    width:500px;
+    height:450px;
+    animation:pulse 1.5s infinite;
+}
+
+.text{
+    position:absolute;
+    color:#ff3366;
+    font-size:14px;
+    font-weight:bold;
+    text-shadow:0 0 10px #ff3366;
+}
+
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.1);}
+    100%{transform:scale(1);}
+}
+
+.falling-heart{
+    position:absolute;
+    color:red;
+    animation:fall linear infinite;
+    user-select:none;
 }
 
 @keyframes fall{
-0%{
-transform:translateY(-10vh);
-opacity:1;
-}
-100%{
-transform:translateY(110vh);
-opacity:0;
-}
+    from{
+        transform:translateY(-100vh);
+        opacity:1;
+    }
+    to{
+        transform:translateY(100vh);
+        opacity:0;
+    }
 }
 </style>
-
 </head>
 <body>
 
-<div class="card" id="inputCard">
-
-<h1 id="soalMtk">Loading...</h1>
-
-<input type="number"
-id="jawabanInput"
-placeholder="Masukkan nilai x">
-
-<button onclick="cekJawaban()">
-Kunci Jawaban 🔒
-</button>
-
-<p id="pesanError"
-style="margin-top:15px;color:red;font-weight:bold;">
-</p>
-
-</div>
-
-<div class="card gombalan-box" id="gombalanCard">
-
-<h1>Pak Teguh ✨</h1>
-
-<p id="teksGombal"
-style="margin:20px 0;font-size:19px;color:#444;font-weight:500;">
-</p>
-
-<button onclick="location.reload()">
-Main Lagi 🔄
-</button>
-
-</div>
+<div class="heart" id="heart"></div>
 
 <script>
+const heart = document.getElementById("heart");
 
-let x = Math.floor(Math.random()*5)+2;
-let y = Math.floor(Math.random()*5)+1;
-let hasil = (3*x)+(2*y);
+// Rumus bentuk hati
+for(let t=0; t<Math.PI*2; t+=0.15){
+    let x = 16 * Math.pow(Math.sin(t),3);
+    let y = -(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t));
 
-document.getElementById("soalMtk").innerHTML =
-"Tantangan Logika:<br>Jika 3x + 2("+y+") = "+hasil+
-", berapakah nilai x? 🤔";
+    let span = document.createElement("span");
+    span.className = "text";
+    span.innerText = "I LOVE YOU";
+    span.style.left = (x*15 + 230) + "px";
+    span.style.top = (y*15 + 200) + "px";
 
-const daftarGombal = [
-
-"Terima kasih Pak Teguh, ilmu yang diberikan bukan sekadar pelajaran, tapi bekal untuk masa depan.",
-
-"Belajar itu proses, gagal itu biasa, berkembang itu pilihan — terima kasih Pak Teguh.",
-
-"Di balik tugas dan deadline, ada ilmu berharga dari Pak Teguh.",
-
-"Sistem boleh acak, tapi semangat belajar tetap jalan. Salam hormat untuk Pak Teguh.",
-
-"Kode bisa error, program bisa bug, tapi ilmu dari Pak Teguh tetap masuk.",
-
-"Random words generator: semangat, sabar, ilmu, sukses — versi Pak Teguh.",
-
-"Terima kasih Pak Teguh, sudah mengajarkan bukan hanya materi, tapi cara berpikir.",
-
-"Otak: loading… Tugas: pending… Pak Teguh: deadline tetap jalan.",
-
-"Dedikasi, disiplin, dan ilmu — terima kasih atas bimbingannya, Pak Teguh.",
-
-"Sistem acak kata menghasilkan: Pak Teguh + ilmu + sabar = dosen keren."
-
-];
-
-function cekJawaban(){
-
-const jawaban =
-document.getElementById("jawabanInput").value;
-
-if(parseInt(jawaban)===x){
-
-bukaGombalan();
-
-}else{
-
-document.getElementById("pesanError")
-.innerText =
-"YAHH SALAHHH 😉";
-
+    heart.appendChild(span);
 }
 
-}
-
-function bukaGombalan(){
-
-const randomText =
-daftarGombal[
-Math.floor(
-Math.random()*daftarGombal.length
-)
-];
-
-document.getElementById("teksGombal")
-.innerText=randomText;
-
-document.getElementById("inputCard")
-.style.display="none";
-
-document.getElementById("gombalanCard")
-.style.display="block";
-
-}
-
+// Hati jatuh
 function createHeart(){
+    const h = document.createElement("div");
+    h.className = "falling-heart";
+    h.innerHTML = "❤️";
+    h.style.left = Math.random()*100 + "vw";
+    h.style.fontSize = (15 + Math.random()*25) + "px";
+    h.style.animationDuration = (3 + Math.random()*5) + "s";
+    document.body.appendChild(h);
 
-const heart =
-document.createElement("div");
-
-heart.classList.add("heart");
-
-heart.innerHTML="❤️";
-
-heart.style.left=
-Math.random()*100+"vw";
-
-heart.style.animationDuration=
-Math.random()*3+2+"s";
-
-document.body.appendChild(heart);
-
-setTimeout(()=>{
-heart.remove();
-},5000);
-
+    setTimeout(()=>{
+        h.remove();
+    },8000);
 }
 
-setInterval(createHeart,400);
-
+setInterval(createHeart,300);
 </script>
 
 </body>
