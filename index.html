@@ -1,99 +1,131 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>I Love You ❤️</title>
+<title>Untuk Kamu ❤️</title>
 
 <style>
-body{
+*{
     margin:0;
-    background:#000;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:linear-gradient(135deg,#000000,#200020,#400040);
     overflow:hidden;
+    height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    height:100vh;
-    font-family:Arial,sans-serif;
+    font-family:'Arial',sans-serif;
+}
+
+.container{
+    text-align:center;
+    position:relative;
+    z-index:10;
 }
 
 .heart{
-    position:relative;
-    width:500px;
-    height:450px;
+    font-size:150px;
+    color:#ff1744;
     animation:pulse 1.5s infinite;
+    filter:drop-shadow(0 0 20px #ff1744);
 }
 
-.text{
-    position:absolute;
-    color:#ff3366;
-    font-size:14px;
+.message{
+    margin-top:20px;
+    color:white;
+    font-size:32px;
     font-weight:bold;
-    text-shadow:0 0 10px #ff3366;
+    text-shadow:0 0 15px #ff66b2;
+    animation:fade 2s ease-in-out infinite alternate;
+    max-width:900px;
+    padding:0 20px;
 }
 
 @keyframes pulse{
     0%{transform:scale(1);}
-    50%{transform:scale(1.1);}
+    50%{transform:scale(1.15);}
     100%{transform:scale(1);}
+}
+
+@keyframes fade{
+    from{opacity:.7;}
+    to{opacity:1;}
 }
 
 .falling-heart{
     position:absolute;
-    color:red;
-    animation:fall linear infinite;
-    user-select:none;
+    top:-50px;
+    color:#ff4d6d;
+    animation:fall linear forwards;
 }
 
 @keyframes fall{
-    from{
-        transform:translateY(-100vh);
-        opacity:1;
-    }
     to{
-        transform:translateY(100vh);
+        transform:translateY(110vh);
         opacity:0;
     }
+}
+
+.star{
+    position:absolute;
+    color:white;
+    animation:twinkle 2s infinite;
+}
+
+@keyframes twinkle{
+    0%,100%{opacity:.2;}
+    50%{opacity:1;}
 }
 </style>
 </head>
 <body>
 
-<div class="heart" id="heart"></div>
+<div class="container">
+    <div class="heart">❤️</div>
+    <div class="message">
+        Gek kito metu lagi yok,<br>
+        soalnyo aku wongnyo kangenan smo kamu ❤️
+    </div>
+</div>
 
 <script>
-const heart = document.getElementById("heart");
 
-// Rumus bentuk hati
-for(let t=0; t<Math.PI*2; t+=0.15){
-    let x = 16 * Math.pow(Math.sin(t),3);
-    let y = -(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t));
-
-    let span = document.createElement("span");
-    span.className = "text";
-    span.innerText = "I LOVE YOU";
-    span.style.left = (x*15 + 230) + "px";
-    span.style.top = (y*15 + 200) + "px";
-
-    heart.appendChild(span);
+// Bintang
+for(let i=0;i<100;i++){
+    let star=document.createElement('div');
+    star.classList.add('star');
+    star.innerHTML='✦';
+    star.style.left=Math.random()*100+'vw';
+    star.style.top=Math.random()*100+'vh';
+    star.style.fontSize=(5+Math.random()*15)+'px';
+    star.style.animationDuration=(1+Math.random()*3)+'s';
+    document.body.appendChild(star);
 }
 
-// Hati jatuh
+// Hujan hati
 function createHeart(){
-    const h = document.createElement("div");
-    h.className = "falling-heart";
-    h.innerHTML = "❤️";
-    h.style.left = Math.random()*100 + "vw";
-    h.style.fontSize = (15 + Math.random()*25) + "px";
-    h.style.animationDuration = (3 + Math.random()*5) + "s";
-    document.body.appendChild(h);
+    let heart=document.createElement('div');
+    heart.classList.add('falling-heart');
+    heart.innerHTML='❤️';
+
+    heart.style.left=Math.random()*100+'vw';
+    heart.style.fontSize=(15+Math.random()*30)+'px';
+    heart.style.animationDuration=(3+Math.random()*5)+'s';
+
+    document.body.appendChild(heart);
 
     setTimeout(()=>{
-        h.remove();
+        heart.remove();
     },8000);
 }
 
-setInterval(createHeart,300);
+setInterval(createHeart,250);
+
 </script>
 
 </body>
