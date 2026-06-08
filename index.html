@@ -1,9 +1,10 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Untuk jea ❤️</title>
+<title>Untuk Jeaa ❤️</title>
 
 <style>
 *{
@@ -19,7 +20,7 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    font-family:'Arial',sans-serif;
+    font-family:Arial,sans-serif;
 }
 
 .container{
@@ -62,6 +63,7 @@ body{
     top:-50px;
     color:#ff4d6d;
     animation:fall linear forwards;
+    user-select:none;
 }
 
 @keyframes fall{
@@ -75,11 +77,23 @@ body{
     position:absolute;
     color:white;
     animation:twinkle 2s infinite;
+    user-select:none;
 }
 
 @keyframes twinkle{
     0%,100%{opacity:.2;}
     50%{opacity:1;}
+}
+
+.music-btn{
+    margin-top:20px;
+    padding:12px 24px;
+    border:none;
+    border-radius:25px;
+    font-size:16px;
+    cursor:pointer;
+    background:#ff4d6d;
+    color:white;
 }
 </style>
 </head>
@@ -87,13 +101,28 @@ body{
 
 <div class="container">
     <div class="heart">❤️</div>
+
     <div class="message">
+        Jeaa ❤️<br><br>
         Gek kito metu lagi yok,<br>
-        soalnyo aku wongnyo kangenan smo jeaaa❤️
+        soalnyo aku wongnyo kangenan nian smo Jeaa 💕
     </div>
+
+    <button class="music-btn" onclick="playMusic()">
+        🎵 Putar Lagu
+    </button>
 </div>
 
+<audio id="musik" loop>
+    <source src="lagu.mp3" type="audio/mpeg">
+</audio>
+
 <script>
+
+// Tombol musik
+function playMusic(){
+    document.getElementById("musik").play();
+}
 
 // Bintang
 for(let i=0;i<100;i++){
@@ -130,3 +159,4 @@ setInterval(createHeart,250);
 
 </body>
 </html>
+```
